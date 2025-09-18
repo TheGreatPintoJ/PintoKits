@@ -8,6 +8,8 @@ import org.bukkit.configuration.file.*;
 import java.io.*;
 import java.util.*;
 
+import static org.bukkit.Bukkit.getServer;
+
 public class RemoveKitCommand implements CommandExecutor {
     private final PintoKits plugin;
 
@@ -43,9 +45,10 @@ public class RemoveKitCommand implements CommandExecutor {
                 e.printStackTrace();
                 return true;
             }
-            sender.sendMessage("Kit removed: " + kitName);
+            sender.sendMessage(ChatColor.GREEN+"Kit removed: " + kitName);
+            getServer().getPluginManager().removePermission("pintokits.kit." + kitName);
         } else {
-            sender.sendMessage("Kit not found: " + kitName);
+            sender.sendMessage(ChatColor.RED+"Kit not found: " + kitName);
         }
         return true;
     }

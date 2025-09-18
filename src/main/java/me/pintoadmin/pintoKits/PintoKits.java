@@ -15,6 +15,8 @@ public final class PintoKits extends JavaPlugin {
         new KitCommand(this);
         new RemoveKitCommand(this);
         new KitCompleter(this);
+
+        addKitPerms();
     }
 
     @Override
@@ -36,7 +38,19 @@ public final class PintoKits extends JavaPlugin {
             FileConfiguration config = YamlConfiguration.loadConfiguration(this.getDataFolder().toPath().resolve("kits.yml").toFile());
             config.save(this.getDataFolder().toPath().resolve("kits.yml").toFile());
         } catch (Exception e) {
-            e.printStackTrace();
+            getLogger().severe("Could not save kits.yml: " + e.getMessage());
+        }
+    }
+
+    public void addKitPerms(){
+        if(getServer().getPluginManager().getPermission("pintokits.kit.*") == null)
+            getServer().getPluginManager().addPermission(new org.bukkit.permissions.Permission("pintokits.kit.*"));
+
+        if(getKitsSection() != null) {
+            for (String kitName : getKitsSection().getKeys(false)) {
+                if(getServer().getPluginManager().getPermission("pintokits.kit." + kitName.toLowerCase()) == null)
+                    getServer().getPluginManager().addPermission(new org.bukkit.permissions.Permission("pintokits.kit." + kitName.toLowerCase()));
+            }
         }
     }
 }

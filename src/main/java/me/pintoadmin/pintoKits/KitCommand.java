@@ -32,11 +32,17 @@ public class KitCommand implements CommandExecutor {
 
         String kitName = args[0].toLowerCase();
 
+        if(!sender.hasPermission("pintokits.kit." + kitName) && !sender.hasPermission("pintokits.kit.*")) {
+            sender.sendMessage(ChatColor.RED+"You do not have permission to use this kit.");
+            return true;
+        }
+
         ConfigurationSection kitsSection = plugin.getKitsSection();
         if (!kitsSection.isConfigurationSection(kitName)) {
             sender.sendMessage("Kit not found: " + kitName);
             return true;
         }
+
         ConfigurationSection thisKitSection = kitsSection.getConfigurationSection(kitName);
         for(String key : thisKitSection.getKeys(false)) {
             if(key.equalsIgnoreCase("items")) {
