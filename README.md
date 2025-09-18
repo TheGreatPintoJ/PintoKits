@@ -29,9 +29,11 @@ PintoKits is a Minecraft Bukkit/Spigot plugin that allows server administrators 
 
 ## Permissions
 
-- pintokits.kit
-- pintokits.savekit
-- pintokits.removekit
+- pintokits.kit (default permission for using kits)
+- pintokits.kit.<kitname> (permission for using a specific kit)
+- pintokits.kit.* (permission for using all kits)
+- pintokits.savekit (default permission for saving kits)
+- pintokits.removekit (default permission for removing kits)
 
 ## Support
 
