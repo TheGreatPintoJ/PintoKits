@@ -8,6 +8,7 @@ PintoKits is a Minecraft Bukkit/Spigot plugin that allows server administrators 
 - Remove existing kits
 - Give kits to players
 - Tab completion for kit commands
+- Dynamic permissions for kit access
 
 ## Installation
 
