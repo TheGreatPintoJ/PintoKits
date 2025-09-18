@@ -18,7 +18,7 @@ PintoKits is a Minecraft Bukkit/Spigot plugin that allows server administrators 
 ## Configuration
 
 - The plugin generates a `kits.yml` file in the plugin's data folder.
-- Use the plguins's commands to edit the kits,
+- Use the plugins's commands to edit the kits,
 **DO NOT EDIT THE KITS.YML FILE**
 
 ## Commands
