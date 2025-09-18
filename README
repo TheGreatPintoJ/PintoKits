@@ -11,14 +11,15 @@ PintoKits is a Minecraft Bukkit/Spigot plugin that allows server administrators 
 
 ## Installation
 
-1. Download the `PintoKits-1.0.jar` from the `build/libs/` directory.
+1. Download the PintoKits jarfile from the releases.
 2. Place the jar file into your server's `plugins` folder.
 3. Start or restart your Minecraft server.
 
 ## Configuration
 
 - The plugin generates a `kits.yml` file in the plugin's data folder.
-- Edit `kits.yml` to define your kits and their contents.
+- Use the plguins's commands to edit the kits,
+**DO NOT EDIT THE KITS.YML FILE**
 
 ## Commands
 
@@ -28,7 +29,9 @@ PintoKits is a Minecraft Bukkit/Spigot plugin that allows server administrators 
 
 ## Permissions
 
-Add permissions as needed for each command in your permissions plugin.
+- pintokits.kit
+- pintokits.savekit
+- pintokits.removekit
 
 ## Support
 
