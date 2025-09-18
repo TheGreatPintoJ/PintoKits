@@ -3,3 +3,28 @@ version: '1.0-SNAPSHOT'
 main: me.pintoadmin.pintoKits.PintoKits
 api-version: '1.21'
 authors: [ PintoJ ]
+commands:
+  kit:
+    description: Get a kit
+    usage: /kit <kitName>
+    permission: pintokits.kit
+    permission-message: You do not have permission to use this command.
+    aliases:
+      - kits
+  savekit:
+    description: Save a kit
+    usage: /savekit <kitName>
+    permission: pintokits.savekit
+    permission-message: You do not have permission to use this command.
+    aliases:
+      - skit
+  removekit:
+    description: Remove a kit
+    usage: /removekit <kitName>
+    permission: pintokits.removekit
+    permission-message: You do not have permission to use this command.
+    aliases:
+      - rkit
+      - rmkit
+      - delkit
+      - deletekit
