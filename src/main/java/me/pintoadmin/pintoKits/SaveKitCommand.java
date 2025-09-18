@@ -2,7 +2,6 @@ package me.pintoadmin.pintoKits;
 
 import org.bukkit.*;
 import org.bukkit.command.*;
-import org.bukkit.configuration.*;
 import org.bukkit.configuration.file.*;
 import org.bukkit.inventory.*;
 

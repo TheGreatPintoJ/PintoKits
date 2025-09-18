@@ -6,7 +6,6 @@ import org.bukkit.configuration.*;
 import org.bukkit.configuration.file.*;
 
 import java.io.*;
-import java.util.*;
 
 import static org.bukkit.Bukkit.getServer;
 
