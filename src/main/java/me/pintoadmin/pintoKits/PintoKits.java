@@ -35,8 +35,8 @@ public final class PintoKits extends JavaPlugin {
 
     public void saveKitsConfig() {
         try {
-            FileConfiguration config = YamlConfiguration.loadConfiguration(this.getDataFolder().toPath().resolve("kits.yml").toFile());
-            config.save(this.getDataFolder().toPath().resolve("kits.yml").toFile());
+            saveResource("kits.yml", false);
+            saveResource("startingkit.yml", false);
         } catch (Exception e) {
             getLogger().severe("Could not save kits.yml: " + e.getMessage());
         }
