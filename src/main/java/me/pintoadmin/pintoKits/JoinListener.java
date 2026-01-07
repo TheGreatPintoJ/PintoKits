@@ -23,14 +23,19 @@ public class JoinListener implements Listener {
     public void onPlayerJoin(PlayerJoinEvent event){
         File startingKitsFile = new File(plugin.getDataFolder(), "startingkit.yml");
         FileConfiguration startingConfig = YamlConfiguration.loadConfiguration(startingKitsFile);
+        String startingKit = startingConfig.getString("startingkit");
 
-        if(!startingConfig.getStringList("players").contains(event.getPlayer().getName())){
+        List<String> playersJoined = startingConfig.getStringList("joined");
+
+        if(!playersJoined.contains(event.getPlayer().getName())){
+
             ConfigurationSection kitsSection = plugin.getKitsSection();
-            if (!kitsSection.isConfigurationSection("startingkit")) {
-                plugin.getLogger().warning("Kit not found: " + "startingkit");
+            if (!kitsSection.isConfigurationSection(startingKit)) {
+                plugin.getLogger().warning("Kit not found: " + startingKit);
                 return;
             }
-            ConfigurationSection thisKitSection = kitsSection.getConfigurationSection("startingkit");
+
+            ConfigurationSection thisKitSection = kitsSection.getConfigurationSection(startingKit);
             for(String key : thisKitSection.getKeys(false)) {
                 if(key.equalsIgnoreCase("items")) {
                     Object items = thisKitSection.get(key);
@@ -38,7 +43,8 @@ public class JoinListener implements Listener {
                     event.getPlayer().getInventory().setContents(itemList.toArray(new ItemStack[0]));
                 }
             }
-            startingConfig.set("players", ((List<String>) startingConfig.get("players")).add(event.getPlayer().getName()));
+            playersJoined.add(event.getPlayer().getName());
+            startingConfig.set("joined", playersJoined);
             try {
                 startingConfig.save(startingKitsFile);
             } catch (IOException e) {

@@ -16,13 +16,13 @@ public final class PintoKits extends JavaPlugin {
         new RemoveKitCommand(this);
         new KitCompleter(this);
 
+        new JoinListener(this);
+
         addKitPerms();
     }
 
     @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
+    public void onDisable() {}
 
     public ConfigurationSection getKitsSection() {
         FileConfiguration config = YamlConfiguration.loadConfiguration(this.getDataFolder().toPath().resolve("kits.yml").toFile());
