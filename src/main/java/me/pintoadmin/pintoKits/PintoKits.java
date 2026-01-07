@@ -4,6 +4,8 @@ import org.bukkit.configuration.*;
 import org.bukkit.configuration.file.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.*;
+
 public final class PintoKits extends JavaPlugin {
 
     @Override
@@ -35,8 +37,8 @@ public final class PintoKits extends JavaPlugin {
 
     public void saveKitsConfig() {
         try {
-            saveResource("kits.yml", false);
-            saveResource("startingkit.yml", false);
+            if(new File(getDataFolder()+"/kits.yml").exists()) saveResource("kits.yml", false);
+            if(new File(getDataFolder()+"/startingkit.yml").exists()) saveResource("startingkit.yml", false);
         } catch (Exception e) {
             getLogger().severe("Could not save kits.yml: " + e.getMessage());
         }
