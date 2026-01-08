@@ -4,6 +4,8 @@ import org.bukkit.configuration.*;
 import org.bukkit.configuration.file.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.io.*;
+
 public final class PintoKits extends JavaPlugin {
 
     @Override
@@ -15,12 +17,14 @@ public final class PintoKits extends JavaPlugin {
         new KitCommand(this);
         new RemoveKitCommand(this);
         new KitCompleter(this);
+
+        new JoinListener(this);
+
+        addKitPerms();
     }
 
     @Override
-    public void onDisable() {
-        // Plugin shutdown logic
-    }
+    public void onDisable() {}
 
     public ConfigurationSection getKitsSection() {
         FileConfiguration config = YamlConfiguration.loadConfiguration(this.getDataFolder().toPath().resolve("kits.yml").toFile());
@@ -33,10 +37,22 @@ public final class PintoKits extends JavaPlugin {
 
     public void saveKitsConfig() {
         try {
-            FileConfiguration config = YamlConfiguration.loadConfiguration(this.getDataFolder().toPath().resolve("kits.yml").toFile());
-            config.save(this.getDataFolder().toPath().resolve("kits.yml").toFile());
+            if(new File(getDataFolder()+"/kits.yml").exists()) saveResource("kits.yml", false);
+            if(new File(getDataFolder()+"/startingkit.yml").exists()) saveResource("startingkit.yml", false);
         } catch (Exception e) {
-            e.printStackTrace();
+            getLogger().severe("Could not save kits.yml: " + e.getMessage());
+        }
+    }
+
+    public void addKitPerms(){
+        if(getServer().getPluginManager().getPermission("pintokits.kit.*") == null)
+            getServer().getPluginManager().addPermission(new org.bukkit.permissions.Permission("pintokits.kit.*"));
+
+        if(getKitsSection() != null) {
+            for (String kitName : getKitsSection().getKeys(false)) {
+                if(getServer().getPluginManager().getPermission("pintokits.kit." + kitName.toLowerCase()) == null)
+                    getServer().getPluginManager().addPermission(new org.bukkit.permissions.Permission("pintokits.kit." + kitName.toLowerCase()));
+            }
         }
     }
 }

@@ -2,7 +2,6 @@ package me.pintoadmin.pintoKits;
 
 import org.bukkit.*;
 import org.bukkit.command.*;
-import org.bukkit.configuration.*;
 import org.bukkit.configuration.file.*;
 import org.bukkit.inventory.*;
 
@@ -43,6 +42,7 @@ public class SaveKitCommand implements CommandExecutor {
         try {
             config.save(kitsFile);
             sender.sendMessage(ChatColor.GREEN+"You have saved the kit: " + kitName);
+            plugin.addKitPerms();
         } catch (IOException e) {
             sender.sendMessage(ChatColor.RED+"An error occurred while saving the kit.");
             getLogger().severe("Could not save kits.yml: " + e.getMessage());
