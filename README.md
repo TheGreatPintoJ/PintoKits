@@ -11,16 +11,19 @@ Kits are defined in a <code>kits.yml</code> file and can be saved, removed, and 
 - Give kits to players
 - Tab completion for kit commands
 - Dynamic permissions for kit access
-- Starting kits, to give a player a kit on join (optionally only first join)
+- Starting kits, to give a player a kit on first join
+
+## Installation
+
+1. Download the PintoKits jarfile from the releases.
+2. Place the jar file into your server's `plugins` folder.
+3. Start or restart your Minecraft server.
 
 ## Configuration
 
-- The `kits.yml` file stores all kits, edit this file using ingame commands
-- The `startingkit.yml` file stores information about the join-based kits
-  - `joinkit` refers to the kit that will be given to the player when any player joins.
-  - `startingkit` refers to the kit that will be given to all players when they first join.
-    - `joined` is a list of players that have joined the server __AND__ have been given the `startingkit`
-  - To disable either join-based kit, set the values to a blank value or nonexisting kit
+- The plugin generates a `kits.yml` file in the plugin's data folder.
+- Use the plugin's commands to edit the kits,
+- The `startingkit.yml` file stores information about the starting kit (defaults to any kit named 'start')
 
 **DO NOT EDIT THE KITS.YML FILE**
 
@@ -33,11 +36,10 @@ Kits are defined in a <code>kits.yml</code> file and can be saved, removed, and 
 ## Permissions
 
 - pintokits.kit (default permission for using kits)
-- pintokits.kit.\<kitname> (permission for using a specific kit)
+- pintokits.kit.<kitname> (permission for using a specific kit)
 - pintokits.kit.* (permission for using all kits)
 - pintokits.savekit (default permission for saving kits)
 - pintokits.removekit (default permission for removing kits)
-- pintokits.joinkit.disable (disable giving this player join-based kits)
 
 ## Support
 

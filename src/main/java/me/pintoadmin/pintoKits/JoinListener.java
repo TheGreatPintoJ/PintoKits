@@ -3,7 +3,6 @@ package me.pintoadmin.pintoKits;
 
 import org.bukkit.configuration.*;
 import org.bukkit.configuration.file.*;
-import org.bukkit.entity.*;
 import org.bukkit.event.*;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.*;
@@ -13,7 +12,6 @@ import java.util.*;
 
 public class JoinListener implements Listener {
     private final PintoKits plugin;
-    private ConfigurationSection kitsSection;
 
     public JoinListener(PintoKits plugin) {
         this.plugin = plugin;
@@ -26,21 +24,25 @@ public class JoinListener implements Listener {
         File startingKitsFile = new File(plugin.getDataFolder(), "startingkit.yml");
         FileConfiguration startingConfig = YamlConfiguration.loadConfiguration(startingKitsFile);
         String startingKit = startingConfig.getString("startingkit");
-        String joinKit = startingConfig.getString("joinkit");
+
         List<String> playersJoined = startingConfig.getStringList("joined");
-        kitsSection = plugin.getKitsSection();
 
-        if(event.getPlayer().hasPermission("pintokits.joinkits.disable")) return;
-
-        //JoinKit
-        if (loadKit(event.getPlayer(), joinKit)){
-            return;
-        }
-
-        //StartingKit
         if(!playersJoined.contains(event.getPlayer().getName())){
-            loadKit(event.getPlayer(), startingKit);
 
+            ConfigurationSection kitsSection = plugin.getKitsSection();
+            if (!kitsSection.isConfigurationSection(startingKit)) {
+                plugin.getLogger().warning("Kit not found: " + startingKit);
+                return;
+            }
+
+            ConfigurationSection thisKitSection = kitsSection.getConfigurationSection(startingKit);
+            for(String key : thisKitSection.getKeys(false)) {
+                if(key.equalsIgnoreCase("items")) {
+                    Object items = thisKitSection.get(key);
+                    ArrayList<?> itemList = (ArrayList<?>) items;
+                    event.getPlayer().getInventory().setContents(itemList.toArray(new ItemStack[0]));
+                }
+            }
             playersJoined.add(event.getPlayer().getName());
             startingConfig.set("joined", playersJoined);
             try {
@@ -49,22 +51,5 @@ public class JoinListener implements Listener {
                 plugin.getLogger().warning("Could not save startingkit.yml file: "+e.getMessage());
             }
         }
-    }
-
-    private boolean loadKit(Player player, String kitName){
-        if(kitName == null) return false;
-        if (!kitsSection.isConfigurationSection(kitName)) {
-            plugin.getLogger().warning("Kit not found: " + kitName);
-            return false;
-        }
-        ConfigurationSection thisKitSection = kitsSection.getConfigurationSection(kitName);
-        for(String key : thisKitSection.getKeys(false)) {
-            if(key.equalsIgnoreCase("items")) {
-                Object items = thisKitSection.get(key);
-                ArrayList<?> itemList = (ArrayList<?>) items;
-                player.getInventory().setContents(itemList.toArray(new ItemStack[0]));
-            }
-        }
-        return true;
     }
 }
