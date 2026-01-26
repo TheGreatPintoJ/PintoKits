@@ -24,18 +24,24 @@ public class SaveKitCommand implements CommandExecutor {
             sender.sendMessage("Only players can use this command.");
             return true;
         }
-        if (args.length == 0) {
-            sender.sendMessage("Usage: /savekit <kitname>");
+        if (args.length != 2) {
+            sender.sendMessage("Usage: /savekit <kitname> <type>");
             return true;
         }
 
         String kitName = args[0].toLowerCase();
+        String kitType = args[1].toLowerCase();
+        if(!kitType.equalsIgnoreCase("add") && !kitType.equalsIgnoreCase("replace")){
+            sender.sendMessage(ChatColor.RED+"Invalid type! Try 'add' or 'replace'");
+            return true;
+        }
 
         Inventory playerInventory = ((org.bukkit.entity.Player) sender).getInventory();
         File kitsFile = new File(plugin.getDataFolder(), "kits.yml");
         FileConfiguration config = YamlConfiguration.loadConfiguration(kitsFile);
 
         HashMap<String, Object> kitData = new HashMap<>();
+        kitData.put("operationtype", kitType);
         kitData.put("items", playerInventory.getContents());
         config.createSection("kits." + kitName, kitData);
 
