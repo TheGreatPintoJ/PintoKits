@@ -1,6 +1,8 @@
-# PintoKits
+[<img width="1536" height="375" alt="PintoKits_Banner" src="https://github.com/user-attachments/assets/cbfc524a-7934-4e65-8f14-313ac1360a20" />](https://docs.pintocraft.com)
 
-PintoKits is a Minecraft Bukkit/Spigot plugin that allows server administrators to manage custom kits for players. Kits are defined in a `kits.yml` file and can be saved, removed, and given to players via commands.
+<h1 align="center">PintoKits</h1>
+<p align="center">PintoKits is a Minecraft Bukkit/Spigot plugin that allows server administrators to manage custom kits for players.<br>
+Kits are defined in a <code>kits.yml</code> file and can be saved, removed, and given to players via commands.</p>
 
 ## Features
 
