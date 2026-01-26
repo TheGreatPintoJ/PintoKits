@@ -28,3 +28,8 @@ commands:
       - rmkit
       - delkit
       - deletekit
+
+permissions:
+  pintokits.joinkits.disable:
+      description: Disable joining-based kits for this player
+      default: false

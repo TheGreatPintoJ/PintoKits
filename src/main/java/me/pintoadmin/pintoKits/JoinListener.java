@@ -30,6 +30,8 @@ public class JoinListener implements Listener {
         List<String> playersJoined = startingConfig.getStringList("joined");
         kitsSection = plugin.getKitsSection();
 
+        if(event.getPlayer().hasPermission("pintokits.joinkits.disable")) return;
+
         //JoinKit
         if (loadKit(event.getPlayer(), joinKit)){
             return;
