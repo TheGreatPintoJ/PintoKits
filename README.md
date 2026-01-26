@@ -9,7 +9,7 @@ PintoKits is a Minecraft Bukkit/Spigot plugin that allows server administrators 
 - Give kits to players
 - Tab completion for kit commands
 - Dynamic permissions for kit access
-- Starting kits, to give a player a kit on first join
+- Starting kits, to give a player a kit on join (optionally only first join)
 
 ## Installation
 
