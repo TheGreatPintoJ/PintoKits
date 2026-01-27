@@ -2,6 +2,8 @@ package me.pintoadmin.pintoKits;
 
 import org.bukkit.command.*;
 
+import java.util.*;
+
 public class KitCompleter implements TabCompleter {
     private final PintoKits plugin;
 
@@ -13,9 +15,9 @@ public class KitCompleter implements TabCompleter {
     }
 
     @Override
-    public java.util.List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args) {
+        List<String> completions = new ArrayList<>();
         if (args.length == 1) {
-            java.util.List<String> completions = new java.util.ArrayList<>();
             if (command.getName().equalsIgnoreCase("kit") || command.getName().equalsIgnoreCase("removekit")) {
                 if (plugin.getKitsSection() != null) {
                     completions.addAll(plugin.getKitsSection().getKeys(false));
@@ -23,7 +25,12 @@ public class KitCompleter implements TabCompleter {
             } else if (command.getName().equalsIgnoreCase("savekit")) {
                 completions.add("<kitname>");
             }
-            return completions;
+            if(!completions.isEmpty())
+                return completions;
+        } else if(args.length == 2){
+            if(command.getLabel().equalsIgnoreCase("savekit")){
+                return List.of("add", "replace");
+            }
         }
         return null;
     }

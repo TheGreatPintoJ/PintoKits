@@ -3,9 +3,11 @@ package me.pintoadmin.pintoKits;
 import org.bukkit.*;
 import org.bukkit.command.*;
 import org.bukkit.configuration.*;
+import org.bukkit.configuration.file.*;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.*;
 
+import java.io.*;
 import java.util.*;
 
 public class KitCommand implements CommandExecutor {
@@ -25,7 +27,7 @@ public class KitCommand implements CommandExecutor {
             }
             return true;
         }
-        if(!(sender instanceof Player)) {
+        if(!(sender instanceof Player player)) {
             sender.sendMessage("Only players can use this command.");
             return true;
         }
@@ -43,12 +45,32 @@ public class KitCommand implements CommandExecutor {
             return true;
         }
 
+        File kitsFile = new File(plugin.getDataFolder(), "kits.yml");
+        FileConfiguration config = YamlConfiguration.loadConfiguration(kitsFile);
+
         ConfigurationSection thisKitSection = kitsSection.getConfigurationSection(kitName);
+        String kitType = thisKitSection.getString("operationtype", "add");
+        if(kitType.equalsIgnoreCase("add")){
+            config.set("kits."+kitName+".operationtype", "add");
+            try {
+                config.save(kitsFile);
+            } catch (IOException e) {
+                plugin.getLogger().warning("Could not save kits file: "+e.getMessage());
+            }
+        }
         for(String key : thisKitSection.getKeys(false)) {
             if(key.equalsIgnoreCase("items")) {
                 Object items = thisKitSection.get(key);
-                ArrayList<?> itemList = (ArrayList<?>) items;
-                ((Player) sender).getInventory().setContents(itemList.toArray(new ItemStack[0]));
+                ArrayList<ItemStack> itemStacks = (ArrayList<ItemStack>) items;
+                if(itemStacks == null) return true;
+                if(kitType.equalsIgnoreCase("replace")) {
+                    player.getInventory().setContents(itemStacks.toArray(new ItemStack[0]));
+                } else if(kitType.equalsIgnoreCase("add")){
+                    for(ItemStack item : itemStacks) {
+                        if(item == null) continue;
+                        player.getInventory().addItem(item);
+                    }
+                }
             }
         }
 
